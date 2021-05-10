@@ -8,7 +8,7 @@ import re
 load_dotenv()
 
 client = discord.Client()
-hackNightRegex = "/next ((?:s?hr?|cr|u|o)(?:e|a|i|o|u)?c?o?w?(?:k|c|p|t|oo?|u(?:t|p)?)(?:e|a)?(?:s|y|lacka)?(?:\s|-)?(?:n|b)?(?:e|i|oo?|a)?u?(?:k|w|g|c|o|t)?k?a?(?:ey|ht|ky|e|t|wu|o(?:p|t)?|lacka))/i"
+hackNightRegex = "next ((?:s?hr?|cr|u|o)(?:e|a|i|o|u)?c?o?w?(?:k|c|p|t|oo?|u(?:t|p)?)(?:e|a)?(?:s|y|lacka)?(?:\s|-)?(?:n|b)?(?:e|i|oo?|a)?u?(?:k|w|g|c|o|t)?k?a?(?:ey|ht|ky|e|t|wu|o(?:p|t)?|lacka))"
 
 tz = timezone('US/Eastern')
 
@@ -56,7 +56,7 @@ def nextDate():
         d.replace(day = d.day + ((6 + 7 - d.strftime('%w')) % 7)); # Sets to date of the next Saturday
         setTime(d, 20, 30, 0); # Sets time to 20:30 Eastern
 
-    return getSecs(d)
+    return d
 
 @client.event
 async def on_ready():
@@ -71,12 +71,11 @@ async def on_message(message):
 
     message = message.content
     print(message)
-    textMatch = re.seach(hackNightRegex,message)#search
+    textMatch = re.search(hackNightRegex,message)
     print(textMatch)
     if textMatch!=None:
         nextHackNight = nextDate()
-        prompt = f"The next _{textMatch[1]}_ is *<!date^{nextHackNight}^{date_short_pretty} at {time}|[Open Discord To View]>* your time. See you there!"
+        prompt = f"The next _{textMatch[1]}_ is **{nextHackNight}** your time. See you there!"
         await channel.send(prompt)
-    await channel.send('Ack')
 
 client.run(os.getenv('BOT_TOKEN'))
