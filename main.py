@@ -16,9 +16,6 @@ def setTime(date, hours, mins, secs):
     date = date.replace(hour=hours, minute=mins, second=secs)
     return date
 
-def getSecs(ts):
-    return int(datetime.datetime.timestamp(ts))
-
 def happeningNow():
 
     time = datetime.datetime.now(tz)
@@ -29,7 +26,7 @@ def happeningNow():
     # Check if today is Wednesday
     if day==3:
         # Check if current time is between 15:30 and 23:59 ET
-        if (hours > 15 or (hours == 15 and minutes >= 30)) and (hours < 23 or (hours == 23 and minutes <= 59)):
+        if (hours > 15 or (hours == 15 and mins >= 30)) and (hours < 23 or (hours == 23 and mins <= 59)):
             return True
 
     # Check if today is Saturday
@@ -38,8 +35,7 @@ def happeningNow():
         if (hours >= 20 and mins >= 30) and (hours <= 23 and mins <= 59):
             return True
 
-    #return False
-    return True #delete
+    return False
 
 def nextDate():
     d = datetime.datetime.now(tz)
@@ -58,18 +54,18 @@ def genTimeMessage(textMatch):
     if happeningNow():
         prompt = f'_{textMatch[1].title()}_ is happening right now, what are you still doing here!? Join the call!\nhttps://hack.af/night'
     else:
-        nextHackNight = datetime.datetime.fromtimestamp(nextDate())
-        prompt = f"The next _{textMatch[1]}_ is **{nextHackNight.strftime('%b %d at %I:%M %p')}** your time. See you there!"
+        nextHackNight = nextDate().astimezone(timezone('Asia/Kolkata'))
+        prompt = f'The next _{textMatch[1]}_ is **{nextHackNight.strftime('%b %d at %I:%M %p')} IST**. See you there!'
     return prompt
 
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
-    checkUpdate.start(client.get_channel(int(os.getenv('CHANNEL_TEST'))))
+    checkUpdate.start(client.get_channel(int(os.getenv('CHANNEL_ID'))))
 
 @client.event
 async def on_message(message):
-    channel = client.get_channel(int(os.getenv('CHANNEL_TEST')))
+    channel = client.get_channel(int(os.getenv('CHANNEL_ID')))
     if message.author == client.user:
         return
 
@@ -78,19 +74,17 @@ async def on_message(message):
     if textMatch!=None:
        await channel.send(genTimeMessage(textMatch))
 
-@tasks.loop(minutes=5)
+@tasks.loop(minutes=15)
 async def checkUpdate(channel):
     prompt=None
-    db = int(os.getenv('db'))
-    print(db)
-    mutex = int(os.getenv('mutex'))
+    mutex = int(os.getenv('MUTEX'))
     if happeningNow():
-        if db > 0:
+        if mutex > 0:
             prompt = f':crescent_moon: It\'s **Hack Night!**\n\nMeet some new people, build something cool, talk about it. There are no prizes or expectations—just have fun!\n\nThe Hack Night call link has been reactivated by yours truly the Night Golem.\n\n:arrow_right: Join Hack Night (https://hack.af/night)'
-            db-= 1
+            mutex-= 1
             await channel.send(prompt)
     else:
-        db = mutex
-    os.environ['db'] = str(db)
+        mutex = 1
+    os.environ['MUTEX'] = str(mutex)
 
 client.run(os.getenv('BOT_TOKEN'))
