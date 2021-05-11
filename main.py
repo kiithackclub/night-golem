@@ -17,8 +17,7 @@ def setTime(date, hours, mins, secs):
     return date
 
 def getSecs(ts):
-    return int(datetime.datetime.timestamp(ts)/1000)
-
+    return int(datetime.datetime.timestamp(ts))
 
 def isHappening():
 
@@ -45,18 +44,16 @@ def isHappening():
     return false
 
 def nextDate():
-    d = datetime.datetime.now()
-    today = datetime.datetime.now(tz).strftime("%w")
-
-    if today in range(0,3):
-         d.replace(day = d.day + ((3 + 7 - d.strftime('%w')) % 7)); # Sets to date of the next Wednesday
-         setTime(d, 15, 30, 0); # Sets time to 15:30 Eastern
-    elif today in range(4,6):
+    d = datetime.datetime.now(tz)
+    today = int(datetime.datetime.now(tz).strftime("%w"))
+    if today in range(0,4):
+        d = d.replace(day = d.day + (((3 + 7 - int(d.strftime('%w'))) % 7))) # Sets to date of the next Wednesday
+        d = setTime(d, 15, 30, 0); # Sets time to 15:30 Eastern
+    elif today in range(4,7):
         # Today is Thu - Sat
-        d.replace(day = d.day + ((6 + 7 - d.strftime('%w')) % 7)); # Sets to date of the next Saturday
-        setTime(d, 20, 30, 0); # Sets time to 20:30 Eastern
-
-    return d
+        d = d.replace(day = d.day + (((6 + 7 - int(d.strftime('%w'))) % 7))) # Sets to date of the next Saturday
+        d = setTime(d, 20, 30, 0); # Sets time to 20:30 Eastern
+    return getSecs(d)
 
 @client.event
 async def on_ready():
@@ -70,12 +67,10 @@ async def on_message(message):
         return
 
     message = message.content
-    print(message)
     textMatch = re.search(hackNightRegex,message)
-    print(textMatch)
     if textMatch!=None:
-        nextHackNight = nextDate()
-        prompt = f"The next _{textMatch[1]}_ is **{nextHackNight}** your time. See you there!"
+        nextHackNight = datetime.datetime.fromtimestamp(nextDate())
+        prompt = f"The next _{textMatch[1]}_ is **{nextHackNight.strftime('%b %d at %I:%M %p')}** your time. See you there!"
         await channel.send(prompt)
 
 client.run(os.getenv('BOT_TOKEN'))
