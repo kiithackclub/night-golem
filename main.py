@@ -55,7 +55,7 @@ def genTimeMessage(textMatch):
         prompt = f'_{textMatch[1].title()}_ is happening right now, what are you still doing here!? Join the call!\nhttps://hack.af/night'
     else:
         nextHackNight = nextDate().astimezone(timezone('Asia/Kolkata'))
-        prompt = f'The next _{textMatch[1]}_ is **{nextHackNight.strftime('%b %d at %I:%M %p')} IST**. See you there!'
+        prompt = f'The next _{textMatch[1]}_ is **{nextHackNight.strftime("%b %d at %I:%M %p")} IST**. See you there!'
     return prompt
 
 @client.event
