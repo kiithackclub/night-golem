@@ -47,7 +47,7 @@ def nextDate():
         # Today is Thu - Sat
         d = d.replace(day = d.day + (((6 + 7 - int(d.strftime('%w'))) % 7))) # Sets to date of the next Saturday
         d = setTime(d, 20, 30, 0); # Sets time to 20:30 Eastern
-    return getSecs(d)
+    return d
 
 def genTimeMessage(textMatch):
     prompt=''
