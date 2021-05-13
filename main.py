@@ -17,12 +17,12 @@ def setTime(date, hours, mins, secs):
     return date
 
 def happeningNow():
-
+    
     time = datetime.datetime.now(tz)
 
-    day = time.strftime("%w")
-    hours = time.hour
-    mins = time.minute
+    day = int(time.strftime("%w"))
+    hours = int(time.hour)
+    mins = int(time.minute)
     # Check if today is Wednesday
     if day==3:
         # Check if current time is between 15:30 and 23:59 ET
@@ -34,7 +34,6 @@ def happeningNow():
         # Check if current time is between 20:30 and 23:59 ET
         if (hours >= 20 and mins >= 30) and (hours <= 23 and mins <= 59):
             return True
-
     return False
 
 def nextDate():
@@ -74,7 +73,7 @@ async def on_message(message):
     if textMatch!=None:
        await channel.send(genTimeMessage(textMatch))
 
-@tasks.loop(minutes=15)
+@tasks.loop(minutes=2)
 async def checkUpdate(channel):
     prompt=None
     mutex = int(os.getenv('MUTEX'))
