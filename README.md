@@ -1,6 +1,8 @@
 # :crescent_moon: Night Golem
 
 <img alt="Repl.it" src="https://img.shields.io/badge/Repl.it-%230D101E.svg?&style=for-the-badge&logo=Repl.it&logoColor=white"/><br>
+<div align=center><img src="/Night_Golem.svg"></div><br>
+
 Looks out and gives reminders for Hack Nights !
 
 ## Environment Variables
