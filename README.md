@@ -3,7 +3,7 @@
 <img alt="Repl.it" src="https://img.shields.io/badge/Repl.it-%230D101E.svg?&style=for-the-badge&logo=Repl.it&logoColor=white"/><br>
 <div align=center><img src="/Night_Golem.svg"></div><br>
 
-Looks out and gives reminders for Hack Nights !
+Looks out and gives reminders for Triple H and Hack Nights!
 
 ## Environment Variables
 To get this app working you first need to create a `.env` file which will have some variables. Here are all the variables you need to set up, with hints. You can also check this [template](TEMPLATE.env).
