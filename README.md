@@ -10,8 +10,10 @@ To get this app working you first need to create a `.env` file which will have s
 
 BOT_TOKEN = `your bot token`<br>
 CHANNEL_ID = `channel ID to listen and send messages`<br>
-MUTEX = `set it to 1`
+MUTEX = `set it to 1`<br>
+TRIPLE_H = `set the link`
 
 ## The Deets
 A whole suite of tools to help out with Hack Night!<br>
-[Know more](https://hackclub.com/night/)
+[Know more](https://hackclub.com/night/)<br>
+Triple H is a KIIT Hack Club Exclusive, only its members know about it :eyes:
