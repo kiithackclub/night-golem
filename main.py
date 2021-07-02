@@ -13,7 +13,7 @@ load_dotenv()
 
 client = discord.Client()
 hackNightRegex = "next ((?:s?hr?|cr|u|o)(?:e|a|i|o|u)?c?o?w?(?:k|c|p|t|oo?|u(?:t|p)?)(?:e|a)?(?:s|y|lacka)?(?:\s|-)?(?:n|b)?(?:e|i|oo?|a)?u?(?:k|w|g|c|o|t)?k?a?(?:ey|ht|ky|e|t|wu|o(?:p|t)?|lacka))"
-THRegex = "next ((h(h{2}|3))|(3h)|(t\w*.?h(a|c|k|h)*))"
+THRegex = "^next ((h(h{2}|3))|(3h)|(t\w*.?h(a|c|k|h)*))"
 tz = timezone('US/Eastern')
 thDay = 6
 error = ['You need a higher level to use this command','This command is locked, comeback later with higher role', 'Authencation: **Successful**\nAuthorization: **Failed**', 'What are you trying to pull of ? ಠಿ_ಠ', 'Permission denied, bring sudo next time <( ￣^￣)','/usr/bin/sudo: Permission Denied','Ask <@KIITHackClub>']
